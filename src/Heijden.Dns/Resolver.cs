@@ -391,6 +391,12 @@ namespace Heijden.DNS
 			{
 				for (int intDnsServer = 0; intDnsServer < m_DnsServers.Count; intDnsServer++)
 				{
+                    if (m_DnsServers[intDnsServer].AddressFamily != AddressFamily.InterNetwork)
+                    {
+                        Verbose(string.Format(";; Connection to nameserver {0} skipped (non IPv4 address)", (intDnsServer + 1)));
+                        continue;
+                    }
+
 					TcpClient tcpClient = new TcpClient();
 					tcpClient.ReceiveTimeout = m_Timeout * 1000;
 
